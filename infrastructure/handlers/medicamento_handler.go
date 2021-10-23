@@ -14,9 +14,16 @@ func NewMedicamentoHandler(MedicamentoUseCase usecases.MedicamentoUseCase) *Medi
 }
 
 func (ctrl *MedicamentoHandler) GetMedicamentos(c *gin.Context) {
-	message := ctrl.MedicamentoUseCase.GetAll()
-	c.JSON(200, gin.H{
-		"Medicamentos": message,
-	})
+	medicamentos, error := ctrl.MedicamentoUseCase.GetAll()
+	if error != nil {
+		c.JSON(400, gin.H{
+			"error": error.Error(),
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"medicamentos": medicamentos,
+		})
+
+	}
 
 }

@@ -6,17 +6,27 @@ import (
 	"github.com/charlieaular/drugstore_backend/domain/usecases"
 	"github.com/charlieaular/drugstore_backend/infrastructure/handlers"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-var medicamentoHandler = getMedicamentoHandler()
+type MedicamentoHandler struct {
+	db *gorm.DB
+}
 
-func RegisterMedicamentosRoutes(router *gin.Engine) {
+func RegisterMedicamentosRoutes(router *gin.Engine, db *gorm.DB) {
+	medicamentoHandler := NewMedicamentoHandler(db)
 	medicamentosEndpoints := router.Group("/medicamento")
 	medicamentosEndpoints.GET("/", medicamentoHandler.GetMedicamentos)
 }
 
-func getMedicamentoHandler() handlers.MedicamentoHandler {
-	medicamentoSource := datasource.NewMedicamentoDataSourceImpl()
+func NewMedicamentoHandler(db *gorm.DB) handlers.MedicamentoHandler {
+	medicamentoHandl := MedicamentoHandler{db: db}
+	medicamentoHandler := medicamentoHandl.getMedicamentoHandler()
+	return medicamentoHandler
+}
+
+func (handler *MedicamentoHandler) getMedicamentoHandler() handlers.MedicamentoHandler {
+	medicamentoSource := datasource.NewMedicamentoDataSourceImpl(handler.db)
 	medicamentoRepo := repositories.NewMedicamentoRepositoryImpl(medicamentoSource)
 	medicamentoUsecase := usecases.NewMedicamentoUseCase(medicamentoRepo)
 	medicamentoHandler := handlers.NewMedicamentoHandler(medicamentoUsecase)

@@ -1,15 +1,14 @@
 package model
 
 import (
-	"database/sql"
 	"time"
 )
 
 type Factura struct {
-	ID          int32           `gorm:"primary_key;column:id;type:INT4;"`
-	FechaCrear  time.Time       `gorm:"column:fecha_crear;type:DATE;"`
-	PagoTotal   sql.NullFloat64 `gorm:"column:pago_total;type:FLOAT8;"`
-	PromocionID sql.NullInt64   `gorm:"column:promocion_id;type:INT4;"`
+	ID          int32     `gorm:"primary_key;column:id;type:INT4;" json:"id"`
+	FechaCrear  time.Time `gorm:"column:fecha_crear;type:DATE;" json:"fecha_rear"`
+	PagoTotal   float64   `gorm:"column:pago_total;type:FLOAT8;" json:"pago_total"`
+	PromocionID int       `gorm:"column:promocion_id;type:INT4;" json:"promocion_id"`
 }
 
 // TableName sets the insert table name for this struct type

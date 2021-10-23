@@ -3,6 +3,7 @@ package repositories
 import (
 	"github.com/charlieaular/drugstore_backend/data/datasource"
 	"github.com/charlieaular/drugstore_backend/domain/repositories"
+	model "github.com/charlieaular/drugstore_backend/models"
 )
 
 type MedicamentoRepositoryImpl struct {
@@ -13,6 +14,6 @@ func NewMedicamentoRepositoryImpl(MedicamentoDataSource datasource.MedicamentoDa
 	return &MedicamentoRepositoryImpl{MedicamentoDataSource}
 }
 
-func (impl *MedicamentoRepositoryImpl) GetAll() string {
+func (impl *MedicamentoRepositoryImpl) GetAll() ([]model.Medicamento, error) {
 	return impl.MedicamentoDataSource.GetAll()
 }
