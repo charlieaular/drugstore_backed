@@ -16,8 +16,10 @@ type MedicamentoHandler struct {
 func RegisterMedicamentosRoutes(router *gin.Engine, db *gorm.DB) {
 	medicamentoHandler := NewMedicamentoHandler(db)
 	medicamentosEndpoints := router.Group("/medicamento")
-	medicamentosEndpoints.GET("/", medicamentoHandler.GetMedicamentos)
-	medicamentosEndpoints.POST("/", medicamentoHandler.Create)
+	{
+		medicamentosEndpoints.GET("/", medicamentoHandler.GetMedicamentos)
+		medicamentosEndpoints.POST("/", medicamentoHandler.Create)
+	}
 }
 
 func NewMedicamentoHandler(db *gorm.DB) handlers.MedicamentoHandler {

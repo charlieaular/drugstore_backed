@@ -33,17 +33,16 @@ func (ctrl *MedicamentoHandler) GetMedicamentos(c *gin.Context) {
 func (ctrl *MedicamentoHandler) Create(c *gin.Context) {
 	var model models.Medicamento
 	c.BindJSON(&model)
-	medicamento, error := ctrl.MedicamentoUseCase.Create(model)
+	_, error := ctrl.MedicamentoUseCase.Create(model)
 	if error != nil {
 		c.JSON(400, gin.H{
 			"exito": false,
-			"error": error.Error(),
+			"error": "medicamento no creado",
 		})
 	} else {
 		c.JSON(200, gin.H{
-			"exito":       true,
-			"medicamento": medicamento,
+			"exito": true,
+			"data":  "medicamento creado",
 		})
-
 	}
 }

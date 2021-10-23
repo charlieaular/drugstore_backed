@@ -28,6 +28,7 @@ func main() {
 
 	router.RegisterFacturasRoutes(app)
 	router.RegisterMedicamentosRoutes(app, db)
+	router.RegisterPromocionsRoutes(app, db)
 
 	app.Run(":8000")
 }
