@@ -6,8 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//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
-
 type MedicamentoHandler struct {
 	MedicamentoUseCase usecases.MedicamentoUseCase
 }
