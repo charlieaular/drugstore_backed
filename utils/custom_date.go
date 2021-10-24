@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -21,4 +22,9 @@ func (mt *CustomDate) UnmarshalJSON(bs []byte) error {
 	}
 	*mt = CustomDate(t)
 	return nil
+}
+
+func (mt CustomDate) MarshalJSON() ([]byte, error) {
+	stamp := fmt.Sprintf("\"%s\"", time.Time(mt).Format("2006-01-02"))
+	return []byte(stamp), nil
 }
