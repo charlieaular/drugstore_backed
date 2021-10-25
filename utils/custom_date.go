@@ -10,7 +10,7 @@ type CustomDate time.Time
 
 var _ json.Unmarshaler = &CustomDate{}
 
-func (mt *CustomDate) UnmarshalJSON(bs []byte) error {
+func (cd *CustomDate) UnmarshalJSON(bs []byte) error {
 	var s string
 	err := json.Unmarshal(bs, &s)
 	if err != nil {
@@ -20,11 +20,11 @@ func (mt *CustomDate) UnmarshalJSON(bs []byte) error {
 	if err != nil {
 		return err
 	}
-	*mt = CustomDate(t)
+	*cd = CustomDate(t)
 	return nil
 }
 
-func (mt CustomDate) MarshalJSON() ([]byte, error) {
-	stamp := fmt.Sprintf("\"%s\"", time.Time(mt).Format("2006-01-02"))
+func (cd CustomDate) MarshalJSON() ([]byte, error) {
+	stamp := fmt.Sprintf("\"%s\"", time.Time(cd).Format("2006-01-02"))
 	return []byte(stamp), nil
 }

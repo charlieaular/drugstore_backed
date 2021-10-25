@@ -16,4 +16,6 @@ CREATE INDEX factura_id_idx ON public.factura USING btree (id);
 
 -- public.factura foreign keys
 
-ALTER TABLE public.factura ADD CONSTRAINT factura_fk FOREIGN KEY (id) REFERENCES public.promocion(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE public.factura ADD CONSTRAINT factura_fk FOREIGN KEY (promocion_id) REFERENCES public.promocion(id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE public.factura ALTER COLUMN pago_total TYPE decimal(6, 2) USING pago_total::decimal;

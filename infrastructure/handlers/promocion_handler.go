@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/charlieaular/drugstore_backend/domain/usecases"
 	models "github.com/charlieaular/drugstore_backend/models"
 	"github.com/gin-gonic/gin"
@@ -17,12 +19,12 @@ func NewPromocionHandler(PromocionUseCase usecases.PromocionUseCase) *PromocionH
 func (ctrl *PromocionHandler) GetPromocions(c *gin.Context) {
 	promociones, error := ctrl.PromocionUseCase.GetAll()
 	if error != nil {
-		c.JSON(400, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"exito": false,
 			"error": error.Error(),
 		})
 	} else {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"exito":       true,
 			"promociones": promociones,
 		})
@@ -34,7 +36,7 @@ func (ctrl *PromocionHandler) Create(c *gin.Context) {
 	var model models.Promocion
 	bindError := c.ShouldBindJSON(&model)
 	if bindError != nil {
-		c.JSON(400, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"exito": false,
 			"error": bindError.Error(),
 		})
@@ -43,12 +45,13 @@ func (ctrl *PromocionHandler) Create(c *gin.Context) {
 
 	_, err := ctrl.PromocionUseCase.Create(model)
 	if err != nil {
-		c.JSON(400, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"exito": false,
-			"error": "promocion no creada",
+			"data":  "promocion no creada",
+			"error": err.Error(),
 		})
 	} else {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"exito": true,
 			"data":  "promocion creado",
 		})

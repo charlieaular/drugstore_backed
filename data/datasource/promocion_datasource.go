@@ -1,6 +1,8 @@
 package datasource
 
 import (
+	"errors"
+
 	models "github.com/charlieaular/drugstore_backend/models"
 	"gorm.io/gorm"
 )
@@ -28,6 +30,16 @@ func (impl PromocionDataSourceImpl) GetAll() ([]models.Promocion, error) {
 }
 
 func (impl PromocionDataSourceImpl) Create(newModel models.Promocion) (models.Promocion, error) {
+	var count int64
+	err := impl.db.Model(&models.Promocion{}).Where("fecha_inicio = ?", newModel.FechaInicio).Limit(1).Count(&count).Error
+
+	if err != nil {
+		return models.Promocion{}, err
+	}
+
+	if count > 0 {
+		return models.Promocion{}, errors.New("Ya existe una promoción para ese día")
+	}
 	if result := impl.db.Create(&newModel); result.Error != nil {
 		return models.Promocion{}, result.Error
 	}

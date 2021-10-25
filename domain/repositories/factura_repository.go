@@ -1,5 +1,8 @@
 package repositories
 
+import models "github.com/charlieaular/drugstore_backend/models"
+
 type FacturaRepository interface {
-	GetAll() string
+	GetAll() ([]models.Factura, error)
+	Create(newModel models.Factura, medicamentos []int) (models.Factura, error)
 }

@@ -2,6 +2,7 @@ package usecases
 
 import (
 	"github.com/charlieaular/drugstore_backend/domain/repositories"
+	models "github.com/charlieaular/drugstore_backend/models"
 )
 
 type FacturaUseCase struct {
@@ -12,7 +13,10 @@ func NewFacturaUseCase(FacturaRepository repositories.FacturaRepository) Factura
 	return FacturaUseCase{FacturaRepository}
 }
 
-func (usecase *FacturaUseCase) GetAll() string {
-	message := usecase.FacturaRepository.GetAll()
-	return message
+func (usecase *FacturaUseCase) GetAll() ([]models.Factura, error) {
+	return usecase.FacturaRepository.GetAll()
+}
+
+func (usecase *FacturaUseCase) Create(newModel models.Factura, medicamentos []int) (models.Factura, error) {
+	return usecase.FacturaRepository.Create(newModel, medicamentos)
 }
