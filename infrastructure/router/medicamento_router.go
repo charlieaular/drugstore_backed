@@ -13,7 +13,7 @@ type MedicamentoHandler struct {
 	db *gorm.DB
 }
 
-func RegisterMedicamentosRoutes(router *gin.Engine, db *gorm.DB) {
+func RegisterMedicamentosRoutes(router *gin.RouterGroup, db *gorm.DB) {
 	medicamentoHandler := NewMedicamentoHandler(db)
 	medicamentosEndpoints := router.Group("/medicamento")
 	{

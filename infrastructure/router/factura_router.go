@@ -13,7 +13,7 @@ type FacturaHandler struct {
 	db *gorm.DB
 }
 
-func RegisterFacturasRoutes(router *gin.Engine, db *gorm.DB) {
+func RegisterFacturasRoutes(router *gin.RouterGroup, db *gorm.DB) {
 	FacturaHandler := NewFacturaHandler(db)
 	FacturasEndpoints := router.Group("/factura")
 	{

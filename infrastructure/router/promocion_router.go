@@ -13,7 +13,7 @@ type PromocionHandler struct {
 	db *gorm.DB
 }
 
-func RegisterPromocionsRoutes(router *gin.Engine, db *gorm.DB) {
+func RegisterPromocionsRoutes(router *gin.RouterGroup, db *gorm.DB) {
 	promocionHandler := NewPromocionHandler(db)
 	promocionsEndpoints := router.Group("/promocion")
 	{

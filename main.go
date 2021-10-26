@@ -24,9 +24,6 @@ func main() {
 	}
 
 	app := gin.Default()
-	app.GET("/", func(c *gin.Context) {
-		c.String(200, "Hello Worlddd")
-	})
 
 	app.Use(cors.Middleware(cors.Config{
 		Origins:         "*",
@@ -38,9 +35,11 @@ func main() {
 		ValidateHeaders: false,
 	}))
 
-	router.RegisterFacturasRoutes(app, db)
-	router.RegisterMedicamentosRoutes(app, db)
-	router.RegisterPromocionsRoutes(app, db)
+	v1 := app.Group("/v1")
+
+	router.RegisterFacturasRoutes(v1, db)
+	router.RegisterMedicamentosRoutes(v1, db)
+	router.RegisterPromocionsRoutes(v1, db)
 
 	app.Run(":8000")
 }
