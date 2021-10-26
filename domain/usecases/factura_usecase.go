@@ -20,3 +20,7 @@ func (usecase *FacturaUseCase) GetAll() ([]models.Factura, error) {
 func (usecase *FacturaUseCase) Create(newModel models.Factura, medicamentos []int) (models.Factura, error) {
 	return usecase.FacturaRepository.Create(newModel, medicamentos)
 }
+
+func (usecase *FacturaUseCase) GetGrafica(fechaInicio string, fechaFin string) ([]models.Factura, error) {
+	return usecase.FacturaRepository.GetGrafica(fechaInicio, fechaFin)
+}

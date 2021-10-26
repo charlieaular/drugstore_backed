@@ -10,8 +10,8 @@ type Factura struct {
 	FechaCrear   utils.CustomDate `gorm:"column:fecha_crear;type:DATE;" json:"fecha_crear"`
 	PagoTotal    decimal.Decimal  `gorm:"column:pago_total;type:decimal(6,2);" json:"pago_total" sql:"type:decimal(6,2);"`
 	PromocionID  *int             `gorm:"column:promocion_id;type:INT4;" json:"promocion_id"`
-	Medicamentos *[]Medicamento   `gorm:"many2many:factura_medicamento;foreignkey:id;association_foreignkey:id;association_jointable_foreignkey:medicamento_id;jointable_foreignkey:factura_id;" json:"medicamentos"`
-	Promocion    *Promocion       `gorm:"foreignKey:promocion_id" json:"promocion"`
+	Medicamentos *[]Medicamento   `gorm:"many2many:factura_medicamento;foreignkey:id;association_foreignkey:id;association_jointable_foreignkey:medicamento_id;jointable_foreignkey:factura_id;" json:"medicamentos,omitempty"`
+	Promocion    *Promocion       `gorm:"foreignKey:promocion_id" json:"promocion,omitempty"`
 }
 
 // TableName sets the insert table name for this struct type

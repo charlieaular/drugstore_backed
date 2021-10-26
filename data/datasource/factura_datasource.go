@@ -10,6 +10,7 @@ import (
 type FacturaDataSource interface {
 	GetAll() ([]models.Factura, error)
 	Create(newModel models.Factura, medicamentos []int) (models.Factura, error)
+	GetGrafica(fechaInicio string, fechaFin string) ([]models.Factura, error)
 }
 
 type FacturaDataSourceImpl struct {
@@ -52,4 +53,13 @@ func (impl FacturaDataSourceImpl) Create(newModel models.Factura, medicamentos [
 	}
 
 	return newModel, nil
+}
+
+func (impl FacturaDataSourceImpl) GetGrafica(fechaInicio string, fechaFin string) ([]models.Factura, error) {
+	var facturas []models.Factura
+	if result := impl.db.Where("fecha_crear BETWEEN ? AND ?", fechaInicio, fechaFin).Order("fecha_crear desc").Find(&facturas); result.Error != nil {
+		return nil, result.Error
+	}
+
+	return facturas, nil
 }

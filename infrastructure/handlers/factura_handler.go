@@ -14,7 +14,7 @@ type FacturaHandler struct {
 	FacturaUseCase usecases.FacturaUseCase
 }
 
-type CreateModel struct {
+type CreateDTO struct {
 	Fecha        utils.CustomDate `json:"fecha"`
 	PagoTotal    decimal.Decimal  `json:"pago_total"`
 	Promocion    *int             `json:"promocion,omitempty"`
@@ -42,7 +42,7 @@ func (ctrl *FacturaHandler) GetFacturas(c *gin.Context) {
 }
 
 func (ctrl *FacturaHandler) Create(c *gin.Context) {
-	var model CreateModel
+	var model CreateDTO
 	bindError := c.BindJSON(&model)
 
 	if bindError != nil {
@@ -73,4 +73,23 @@ func (ctrl *FacturaHandler) Create(c *gin.Context) {
 		})
 	}
 	return
+}
+
+func (ctrl *FacturaHandler) GetGrafica(c *gin.Context) {
+	fechaInicio := c.Query("fecha_inicio")
+	fechaFin := c.Copy().Query("fecha_fin")
+
+	facturas, error := ctrl.FacturaUseCase.GetGrafica(fechaInicio, fechaFin)
+	if error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"exito": false,
+			"error": error.Error(),
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"exito":    true,
+			"facturas": facturas,
+		})
+
+	}
 }

@@ -21,3 +21,7 @@ func (impl *FacturaRepositoryImpl) GetAll() ([]models.Factura, error) {
 func (impl *FacturaRepositoryImpl) Create(newModel models.Factura, medicamentos []int) (models.Factura, error) {
 	return impl.FacturaDataSource.Create(newModel, medicamentos)
 }
+
+func (impl *FacturaRepositoryImpl) GetGrafica(fechaInicio string, fechaFin string) ([]models.Factura, error) {
+	return impl.FacturaDataSource.GetGrafica(fechaInicio, fechaFin)
+}
