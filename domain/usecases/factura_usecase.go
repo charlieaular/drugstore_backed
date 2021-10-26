@@ -24,3 +24,7 @@ func (usecase *FacturaUseCase) Create(newModel models.Factura, medicamentos []in
 func (usecase *FacturaUseCase) GetGrafica(fechaInicio string, fechaFin string) ([]models.Factura, error) {
 	return usecase.FacturaRepository.GetGrafica(fechaInicio, fechaFin)
 }
+
+func (usecase *FacturaUseCase) Simular(fecha string, medicamentos []string) (models.Factura, error) {
+	return usecase.FacturaRepository.Simular(fecha, medicamentos)
+}

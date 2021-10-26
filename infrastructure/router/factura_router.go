@@ -20,6 +20,7 @@ func RegisterFacturasRoutes(router *gin.Engine, db *gorm.DB) {
 		FacturasEndpoints.GET("/", FacturaHandler.GetFacturas)
 		FacturasEndpoints.POST("/", FacturaHandler.Create)
 		FacturasEndpoints.GET("/grafica", FacturaHandler.GetGrafica)
+		FacturasEndpoints.GET("/simular", FacturaHandler.Simular)
 	}
 }
 

@@ -77,7 +77,7 @@ func (ctrl *FacturaHandler) Create(c *gin.Context) {
 
 func (ctrl *FacturaHandler) GetGrafica(c *gin.Context) {
 	fechaInicio := c.Query("fecha_inicio")
-	fechaFin := c.Copy().Query("fecha_fin")
+	fechaFin := c.Query("fecha_fin")
 
 	facturas, error := ctrl.FacturaUseCase.GetGrafica(fechaInicio, fechaFin)
 	if error != nil {
@@ -90,6 +90,23 @@ func (ctrl *FacturaHandler) GetGrafica(c *gin.Context) {
 			"exito":    true,
 			"facturas": facturas,
 		})
+	}
+}
 
+func (ctrl *FacturaHandler) Simular(c *gin.Context) {
+	fecha := c.Query("fecha")
+	medicamentos := c.QueryArray("medicamentos[]")
+
+	facturas, error := ctrl.FacturaUseCase.Simular(fecha, medicamentos)
+	if error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"exito": false,
+			"error": error.Error(),
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"exito":   true,
+			"factura": facturas,
+		})
 	}
 }
