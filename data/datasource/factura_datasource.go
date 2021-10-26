@@ -1,8 +1,6 @@
 package datasource
 
 import (
-	"fmt"
-
 	models "github.com/charlieaular/drugstore_backend/models"
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
@@ -34,7 +32,6 @@ func (impl FacturaDataSourceImpl) GetAll() ([]models.Factura, error) {
 }
 
 func (impl FacturaDataSourceImpl) Create(newModel models.Factura, medicamentos []int) (models.Factura, error) {
-	fmt.Println(newModel.PagoTotal)
 	if result := impl.db.Create(&newModel); result.Error != nil {
 		return models.Factura{}, result.Error
 	}
